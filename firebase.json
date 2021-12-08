@@ -1,0 +1,20 @@
+{
+  "hosting": {
+    "public": "fatest",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "function": "ssrServer"
+      }
+    ]
+  },
+  "emulators": {},
+  "functions": {
+    "source": "functions"
+  }
+}

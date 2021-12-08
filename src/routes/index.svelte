@@ -2,7 +2,11 @@
 	import { onMount } from 'svelte';
 	
 	
-	
+	let initializeApp
+    let getAnalytics
+    let logEvent
+    let fbAnalytics
+    
 	onMount(async () => {
 		
         
@@ -10,8 +14,9 @@
 		const firebaseAnalytics = (await import('firebase/analytics'));
 
 
-		const initializeApp = firebaseApp.initializeApp
-		const getAnalytics = firebaseAnalytics.getAnalytics
+		initializeApp = firebaseApp.initializeApp
+		getAnalytics = firebaseAnalytics.getAnalytics
+		logEvent = firebaseAnalytics.logEvent
 
         const firebaseConfig = {
             apiKey: "AIzaSyDdRRGO_rd28JwkIM4SOd7bEeokbIwhpRo",
@@ -28,12 +33,34 @@
         const app = initializeApp(firebaseConfig);
         
         
-        const analytics = getAnalytics(app);
+        fbAnalytics = getAnalytics(app);
 
 
 	});
+
+
+
+
+    const enviarEvento = () => {
+        
+        console.log( fbAnalytics )
+        logEvent(fbAnalytics, "fatest_evento", {
+           dato_personalizado: "Dato de prueba"
+        })
+        // logEvent(fbAnalytics, "level_start", {
+        //    level_name: "Nivel 1"
+        // })
+        
+        // console.log("enviar evento");
+
+    }
 
 </script>
 
 <h1>Firebase Analytics Test</h1>
 
+
+
+<button on:click={enviarEvento}>
+    Enviar Evento
+</button>
